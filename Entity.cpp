@@ -5,40 +5,59 @@ Entity::Entity()
     //ctor
 }
 
+void Entity::Etat()
+{
+    cout << endl << endl << "Classe :" << classe << endl;
+    cout << "Points de Vie : " << *pdv << endl;
+}
+
+
+
 void Entity::attaque(Entity &cible, int numComp)
 {
     switch(numComp)
     {
         case 1: if(cible.cibleVivante())
-                {
-                    cout << endl << classe << " utilise " << cout_comp1 << " points de sa Jauge de MANA !" << endl;
                     cible.subitDegats(degats_comp1, type_comp1);
-                }
-
-                else
-                    cout << endl << classe << " n'a pas suffisemment de MANA ! L'attaque n'a pas aboutie." << endl;
         break;
 
         case 2: if(cible.cibleVivante())
-                {
-                    cout << classe << " Utilise " << cout_comp2 << " points de sa Jauge de MANA !" << endl;
                     cible.subitDegats(degats_comp2, type_comp2);
-                }
-
-                else
-                    cout << endl << classe << " n'a pas suffisemment de MANA ! L'attaque n'a pas aboutie." << endl;
         break;
 
         case 3: if(cible.cibleVivante())
-                {
-                    effetSurSoi(type_comp3);
-                }
-
-                else
-                    cout << endl << classe << " n'a pas suffisemment de MANA ! L'attaque n'a pas aboutie." << endl;
+                    cible.effet(type_comp3);
         break;
     }
 }
+
+
+void Entity::effet(string type)
+{
+    if(type == "SOIN")
+    {
+        *pdv += 50;
+
+        if(*pdv > pdv_max)
+            *pdv = pdv_max;
+
+        cout << "SOIN EFFECTUE !" << endl;
+    }
+
+    else if(type == "PROTECTION")
+    {
+        protecte = true;
+        cout << "Le " << classe << " se protege...";
+    }
+
+    else if(type == "POISON" && poison == false)
+	{
+		double degatP = 0.05*pdv_max;
+		*pdv -= degatP;
+		poison = true;
+	}
+}
+
 
 
 void Entity::subitDegats(double degats, string type)
@@ -60,25 +79,6 @@ void Entity::subitDegats(double degats, string type)
 }
 
 
-void Entity::effetSurSoi(string type)
-{
-    if(type == "SOIN")
-    {
-        *pdv += 50;
-
-        if(*pdv > pdv_max)
-            *pdv = pdv_max;
-
-        cout << "SOIN EFFECTUE !" << endl;
-    }
-
-    else if(type == "PROTECTION")
-    {
-        protecte = true;
-        cout << "Le " << classe << " se protege...";
-    }
-}
-
 
 void Entity::typeTerrain(string type)
 {
@@ -96,7 +96,6 @@ double Entity::effetTerrain(string type)
 
     return 0;
 }
-
 
 
 

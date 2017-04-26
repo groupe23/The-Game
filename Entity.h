@@ -15,10 +15,11 @@ class Entity
         void subitDegats(double degats, string type);
 
         double effetTerrain(string type);
-        void effetSurSoi(string type);
+        void effet(string type);
         void typeTerrain(string type);
 
-        bool manaSuffisant(int cout_mana);
+        void Etat();
+
         bool cibleVivante();
 
         virtual ~Entity();
@@ -47,6 +48,7 @@ class Entity
 
         bool vivant = true;
         bool protecte = false;
+        bool poison = false;
 
     private:
 };
