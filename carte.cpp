@@ -1,4 +1,5 @@
 #include "carte.h"
+#include <utility>
 #include <cstdlib>
 #include <ctime>
 carte::carte()
@@ -9,8 +10,9 @@ decorInaccessible = 'X';
 monstre ='M';
 positionLigne = 0;
 positionColonne = 0;
-nbObstacles = max%2;
-nbMonstres = 3;
+nbObstacles = 5;
+nbMonstres = 10;
+
 
 
 parametrerTailleMap(10);
@@ -38,33 +40,106 @@ void carte::parametrerTailleMap(int m)
 		map[i] = new char[m];
 	}
 }
+/*
+pair<int,int> carte::genererRandom()
+{
+	pair<int,int> random;
+	random.first=rand() % (max-1)+1;
+	random.second=rand() % (max-1)+1;
+	return random;
+}
+
+pair<int,int> carte::genererRandom2()
+{
+	pair<int,int> random;
+	random.first=rand() % (max-1)+1;
+	random.second=rand() % (max-1)+1;
+	return random;
+}
+
+
+
+
+
+
+
+
+
+void carte::placerObstacle(int nbObst)
+{
+
+	for(int i =0 ; i<=nbObst-1; i++)
+	{
+		map[genererRandom2().first][genererRandom2().second] = decorInaccessible;
+	}
+}
+void carte::placerMonstres(int nbMonstres)
+{
+	for(int i =0 ; i<=nbMonstres-1; i++)
+	{
+		map[genererRandom().first][genererRandom().second] = monstre;	
+	}
+
+}
+
+*/
+
+
 
 void carte::placerObstacle(int nbObst)
 {
 	cout << "ALLO";
 	int rand1, rand2;	
 	srand (time(NULL));
-	for(int i = 0; i <= nbObst-1; i++)
-	{
+	int i=0;
+	int nbO=0;
+	do{
 		rand1 = rand() % (max-1) +1;
 		rand2 = rand() % (max-1) +1;
-		map[rand1][rand2] = decorInaccessible;	
-		cout << "ALLO2"<< rand1 << " et " << rand2;
-	}
+		if(map[rand1][rand2] != 'M' &&  map[rand1][rand2] != 'X')
+		{
+			map[rand1][rand2] = decorInaccessible;	
 
+			i++;
+			nbO++;
+			cout << "ALLO"<< i <<" "<< rand1 << " et " << rand2<<endl;
+		}
+	}while(i<=nbObst-1);
+	cout<<"Il y a "<<nbO<<" obstacle"<<endl;
 }
+
+
 void carte::placerMonstres(int nbMonstres)
 {
-	int rand1, rand2;	
+	int rand1, rand2;
 	srand (time(NULL));
-	for(int i = 0; i <= nbMonstres-1; i++)
-	{
+	int i=0;
+	int nbM=0;
+	do{
 		rand1 = rand() % (max-1) +1;
 		rand2 = rand() %(max-1) +1;
-		map[rand1][rand2] = monstre;	
-	}
-
+		if(map[rand1][rand2] != 'M' &&  map[rand1][rand2] != 'X')
+		{
+			map[rand1][rand2] = monstre;	
+			
+			i++;
+			nbM++;
+			cout << "ALLO"<< i <<" "<< rand1 << " et " << rand2<<endl;
+		}
+	}while(i<=nbMonstres-1);
+	cout<<"Il y a "<<nbM<<" monstre"<<endl;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 void carte::seDeplacer(char direction)
 {
